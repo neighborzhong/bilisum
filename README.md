@@ -23,7 +23,12 @@ bilisum 的两条内容通道：
 - 工具**不绕过**任何付费、会员或权限限制。需要权益的内容无法获取时，会如实报错。
 - 使用时需遵守哔哩哔哩的用户协议与相关法律法规。因使用本工具产生的一切后果由使用者自行承担。
 - 项目与哔哩哔哩官方无关，未获其授权或认可。
+## 两种用法
 
+**直接下载使用**（推荐）：去 [Releases](https://github.com/neighborzhong/bilisum/releases)
+下载 `bilisum-lite` 压缩包，按里面的说明操作。
+
+**从源码运行**（开发/定制）：见下方。
 ## 从源码运行
 
 需要 Windows 10/11、Python 3.10+、[uv](https://docs.astral.sh/uv/)、[Ollama](https://ollama.com/download)。
