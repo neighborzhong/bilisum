@@ -107,6 +107,8 @@ class OllamaClient:
         self.model = model
         self.num_ctx = num_ctx
         self.temperature = temperature
+        # 统计被输出长度上限截断的次数：换模型后很容易碰到，不报就没人知道
+        self.truncated = 0
         self._client = httpx.AsyncClient(timeout=timeout, trust_env=False)
 
     async def __aenter__(self) -> "OllamaClient":
@@ -168,7 +170,11 @@ class OllamaClient:
             raise OllamaError(
                 f"Ollama 返回 {resp.status_code}。{hint or resp.text[:300]}"
             )
-        content = ((resp.json().get("message") or {}).get("content") or "").strip()
+        data = resp.json()
+        # done_reason == "length" 说明撞到了 num_predict，内容被截断
+        if data.get("done_reason") == "length":
+            self.truncated += 1
+        content = ((data.get("message") or {}).get("content") or "").strip()
         return THINK_RE.sub("", content).strip()
 
 

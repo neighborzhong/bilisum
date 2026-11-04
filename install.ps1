@@ -31,6 +31,16 @@ foreach ($sub in 'models', 'notes', 'tmp') {
 }
 Write-Host ("  程序文件 {0:N0} MB" -f ((Get-ChildItem $dst -Recurse -File -Exclude *.exe | Where-Object { $_.FullName -notlike "*\data\*" } | Measure-Object Length -Sum).Sum / 1MB))
 
+# 放一份「真正会被读到」的配置在 exe 旁边（_internal 里那份程序不读，容易误导）
+$cfgDst = Join-Path $dst 'config.toml'
+$cfgTpl = Join-Path $PSScriptRoot 'config.example.toml'
+if (-not (Test-Path $cfgDst) -and (Test-Path $cfgTpl)) {
+    Copy-Item $cfgTpl $cfgDst
+    Write-Host "  已生成默认配置：$cfgDst（改这里才生效）"
+} elseif (Test-Path $cfgDst) {
+    Write-Host "  保留已有配置：$cfgDst"
+}
+
 Write-Host "== 3/3 桌面快捷方式 ==" -ForegroundColor Cyan
 $desktop = [Environment]::GetFolderPath('Desktop')
 $lnkPath = Join-Path $desktop 'B站学习笔记.lnk'

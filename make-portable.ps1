@@ -174,6 +174,12 @@ bilisum 精简版 —— 把 B 站视频整理成学习笔记
         (New-Object System.Text.UTF8Encoding($true))
     )
 
+    # exe 旁边放一份真正生效的配置（_internal 里那份程序不读）
+    $cfgTpl = Join-Path $PSScriptRoot 'config.example.toml'
+    if (Test-Path $cfgTpl) {
+        Copy-Item $cfgTpl (Join-Path $Target 'config.toml') -Force
+    }
+
     # 分发前必须清掉属于作者本人的东西
     Remove-Item (Join-Path $Target 'data\settings.json') -Force -ErrorAction SilentlyContinue
     Remove-Item (Join-Path $Target 'data\app.log') -Force -ErrorAction SilentlyContinue

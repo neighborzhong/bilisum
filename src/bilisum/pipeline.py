@@ -250,6 +250,13 @@ async def summarize_url(raw: str, cfg: Config, emit: Emit) -> SummaryResult:
             on_step=lambda msg, p: emit("llm", msg, 82 + 17 * p),
         )
 
+        # 换过模型后很容易撞上输出长度上限，截断的笔记会突然断在半句话
+        if getattr(client, "truncated", 0) > 0:
+            warnings.append(
+                f"有 {client.truncated} 段输出被长度上限截断，笔记可能不完整。"
+                f"换更大的模型、或把 config.toml 里的 chunk_chars 调小可以缓解"
+            )
+
     emit("done", "完成", 100)
     return SummaryResult(
         info=info,
