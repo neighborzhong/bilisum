@@ -1,0 +1,34 @@
+# bilisum 配置模板
+# 复制本文件为 config.toml 后再修改（config.toml 已被 .gitignore 忽略，避免误提交凭据）
+# 优先级：环境变量 > data/settings.json（网页保存）> config.toml > 默认值
+
+# 哔哩哔哩登录凭证：留空则跳过字幕，直接走本地语音识别
+# 也可用环境变量 BILISUM_SESSDATA
+sessdata = ""
+
+# 本地模型
+ollama_base = "http://127.0.0.1:11434"
+ollama_model = "qwen2.5:7b-instruct"
+num_ctx = 8192
+temperature = 0.25
+chunk_chars = 3200
+
+# 语音识别兜底
+whisper_model = "small"       # base | small | medium | large-v3
+whisper_device = "cpu"        # 有 CUDA 环境可改 cuda
+whisper_compute = "int8"
+
+# 输出形态
+# note    = 完整学习笔记，保留所有知识点/代码/命令/参数，不压缩（默认）
+# summary = 精简摘要，5-9 条要点，适合快速了解视频讲什么
+output_mode = "note"
+
+# 画面文字提取（教程/PPT/代码类视频推荐打开）
+extract_frames = false
+frame_interval = 15           # 每多少秒抽一帧，画面切换快就调小
+max_frames = 240              # 抽帧上限，超长视频会自动放大间隔
+
+# 其他
+keep_audio = false
+host = "127.0.0.1"
+port = 8848

@@ -1,0 +1,27 @@
+# ---- Python ----
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# ---- 构建产物 ----
+build/
+dist/
+release/
+
+# ---- 运行时数据（模型 / 笔记 / 缓存 / 日志 / 用户凭据）----
+data/
+
+# ---- 用户配置（可能填了自己的 SESSDATA）----
+config.toml
+
+# ---- 系统与编辑器 ----
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# PyInstaller 生成的 spec（build.ps1 会重新生成）
+bilisum.spec
